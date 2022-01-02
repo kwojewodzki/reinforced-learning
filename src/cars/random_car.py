@@ -22,6 +22,7 @@ class Random_car:
         return next_vert
 
     def solve_maze(self):
+        self.visited_vert = []
         self.visited_vert.append(self.start)
         curr_vert = self.start
         next_vert = 0

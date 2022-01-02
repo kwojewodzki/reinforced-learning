@@ -15,4 +15,5 @@ if __name__ == "__main__":
     while crashed:
         crashed = car.solve_maze()
         i+=1
-    print("Solved in ", i, "iterations")
+    print("Solved in", i, "iterations")
+    print("Car went trough maze in", len(car.visited_vert),"moves")
