@@ -31,7 +31,17 @@ class Maze:
             elif rand.uniform(0, 1) < 0.35:
                 self.graph.append([i, -5]) #obstacle
             else:
-                self.graph.append([i,1]) #free space 
+                self.graph.append([i,1]) #free space
+
+    def load_maze(self):
+        try:
+            f= open("../data/maze.data", "r")
+        except:
+            print("Cannot open file with maze")
+        else:
+            for line in f:
+                num,val = line.partition(' ')[::2]
+                self.graph.append([int(num),int(val)])
 
     def __init__(self,start,finish):
         
@@ -40,7 +50,10 @@ class Maze:
 
         print("Generating maze...")
         self.make_graph()
-
+        #if not gen_maze:
+        #   self.load_maze()
+        #else:
+        #TODO dodać wczytywanie z pliku
         self.add_obstacles()
         if not self.isReachable(self.start, self.finish):
             while not self.isReachable(self.start, self.finish):
