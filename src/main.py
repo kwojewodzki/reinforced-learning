@@ -1,4 +1,6 @@
 import gen_maze
+import cars.random_car as rc
+import cars.q_uber as qu
 import sys
 
 
@@ -7,4 +9,3 @@ if __name__ == "__main__":
     finish = int(sys.argv[2]) - 1
 
     maze = gen_maze.Maze(start,finish)
-    print(maze.isReachable(start,finish))

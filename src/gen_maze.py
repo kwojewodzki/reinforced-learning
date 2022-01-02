@@ -38,11 +38,11 @@ class Maze:
         self.start = start
         self.finish = finish
 
+        print("Generating maze...")
         self.make_graph()
 
         self.add_obstacles()
         if not self.isReachable(self.start, self.finish):
-            print("Generating maze...")
             while not self.isReachable(self.start, self.finish):
                 self.graph = []
                 self.add_obstacles()
