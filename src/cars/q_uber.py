@@ -9,8 +9,20 @@ import numpy.random as rand
 class Q_uber:
     visited_vert = []
     states = [i for i in range(64)]
-    P = [[[],[],[],[]] for i in range[64]]
+    P = [[[],[],[],[]]for i in range(64)]
     epsilon = 0.1
+
+    def init_P(self):
+        for i in len(self.adj):
+            for j in range(4):
+                if j == 0:
+                    pass
+                elif j == 1:
+                    pass
+                elif j == 2:
+                    pass
+                elif j == 3:
+                    pass
 
     def __init__(self,adj,graph,start,finish):
 
