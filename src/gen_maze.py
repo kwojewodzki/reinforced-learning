@@ -39,68 +39,56 @@ class Maze:
         except:
             print("Cannot open file with maze")
         else:
+            print("Loading maze...")
             for line in f:
                 num,val = line.partition(' ')[::2]
                 self.graph.append([int(num),int(val)])
 
-    def __init__(self,start,finish):
+    def __init__(self,start,finish,gen_maze):
         
         self.start = start
         self.finish = finish
 
-        print("Generating maze...")
         self.make_graph()
-        #if not gen_maze:
-        #   self.load_maze()
-        #else:
-        #TODO dodać wczytywanie z pliku
-        self.add_obstacles()
-        if not self.isReachable(self.start, self.finish):
-            while not self.isReachable(self.start, self.finish):
-                self.graph = []
-                self.add_obstacles()
+        if not gen_maze:
+           self.load_maze()
+        else:
+            print("Generating maze...")
+            self.add_obstacles()
+            if not self.isReachable(self.start, self.finish):
+                while not self.isReachable(self.start, self.finish):
+                    self.graph = []
+                    self.add_obstacles()
         
 
     def isReachable(self,s, d):
      
-    # Base case
         if (s == d):
             return True
     
-        # Mark all the vertices as not visited
         visited = [False for i in range(size_of_wall**2)]
         for i in range(len(self.graph)):
             pass
             if self.graph[i][1] < 0:
                 visited[i] = True
     
-        # Create a queue for BFS
         queue = deque()
     
-        # Mark the current node as visited and enqueue it
         visited[s] = True
         queue.append(s)
     
         while (len(queue) > 0):
         
-            # Dequeue a vertex from queue and print
             s = queue.popleft()
-            # queue.pop_front()
-    
-            # Get all adjacent vertices of the dequeued vertex s
-            # If a adjacent has not been visited, then mark it
-            # visited  and enqueue it
+
             for i in self.adj[s]:
-                # If this adjacent node is the destination node,
-                # then return true
+
                 if (i == d):
                     return True
     
-                # Else, continue to do BFS
                 if (not visited[i]):
                     visited[i] = True
                     queue.append(i)
-        # If BFS is complete without visiting d
         return False        
 
 
