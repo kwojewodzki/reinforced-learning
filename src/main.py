@@ -13,8 +13,6 @@ if __name__ == "__main__":
     rand_car = rc.Random_car(maze.adj,maze.graph,start,finish)
     crashed = True
     i = 0
-    while crashed:
-        crashed = rand_car.solve_maze()
-        i+=1
+    crashed = rand_car.solve_maze()
     print("Solved in", i, "iterations")
     print("Car went through maze in", len(rand_car.visited_vert),"moves")

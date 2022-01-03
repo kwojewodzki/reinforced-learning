@@ -32,10 +32,10 @@ class Random_car:
         while curr_vert != self.finish:
             iterations += 1
             next_vert = self.random_move(curr_vert)
-            curr_vert = next_vert
             if self.graph[next_vert][1] < 0:
                 crashed = True
-                break
+            else:
+                curr_vert = next_vert
                 
 
         return crashed
