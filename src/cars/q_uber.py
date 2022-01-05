@@ -8,21 +8,23 @@ import numpy.random as rand
 
 class Q_uber:
     visited_vert = []
-    states = [i for i in range(64)]
     P = [[[],[],[],[]]for i in range(64)]
     epsilon = 0.1
 
+    def set_P_val(self, state, action):
+        self.P[state][action].append(state)
+        self.P[state][action].append(self.graph[state][1])
+        if state == self.finish:
+            self.P[state][action].append(True)
+            self.P[state][action][1] = 10
+
     def init_P(self):
-        for i in len(self.adj):
-            for j in range(4):
+        for i in range(64): #state
+            for j in range(4): #possible action
                 if j == 0:
-                    pass
-                elif j == 1:
-                    pass
-                elif j == 2:
-                    pass
-                elif j == 3:
-                    pass
+                    for k in self.adj[i]:
+                        if k == i + 8:
+                            self.set_P_val(i,j)
 
     def __init__(self,adj,graph,start,finish):
 
@@ -30,6 +32,7 @@ class Q_uber:
         self.adj = adj
         self.start = start
         self.finish = finish
+        self.init_P()
 
     def reset_position(self):
         return self.start

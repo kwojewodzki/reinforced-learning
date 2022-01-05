@@ -7,12 +7,14 @@ import sys
 if __name__ == "__main__":
     start = int(sys.argv[1])
     finish = int(sys.argv[2])
-    load_maze = not bool(sys.argv[3])
+    arg = int(sys.argv[3])
+    if arg == 0:
+        load_maze = False
+    else:
+        load_maze = True
 
+    print(load_maze)
     maze = gen_maze.Maze(start,finish, load_maze)
     rand_car = rc.Random_car(maze.adj,maze.graph,start,finish)
-    crashed = True
-    i = 0
-    crashed = rand_car.solve_maze()
-    print("Solved in", i, "iterations")
+    rand_car.solve_maze()
     print("Car went through maze in", len(rand_car.visited_vert),"moves")

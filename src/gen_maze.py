@@ -29,9 +29,9 @@ class Maze:
             if i == self.start or i == self.finish:
                 self.graph.append([i,1])
             elif rand.uniform(0, 1) < 0.35:
-                self.graph.append([i, -5]) #obstacle
+                self.graph.append([i, -10]) #obstacle
             else:
-                self.graph.append([i,1]) #free space
+                self.graph.append([i,-1]) #free space
 
     def load_maze(self):
         try:
@@ -44,13 +44,14 @@ class Maze:
                 num,val = line.partition(' ')[::2]
                 self.graph.append([int(num),int(val)])
 
-    def __init__(self,start,finish,gen_maze):
+    def __init__(self,start,finish,load_maze):
         
         self.start = start
         self.finish = finish
 
         self.make_graph()
-        if not gen_maze:
+        print(load_maze)
+        if load_maze:
            self.load_maze()
         else:
             print("Generating maze...")
@@ -69,7 +70,7 @@ class Maze:
         visited = [False for i in range(size_of_wall**2)]
         for i in range(len(self.graph)):
             pass
-            if self.graph[i][1] < 0:
+            if self.graph[i][1] < -5:
                 visited[i] = True
     
         queue = deque()
