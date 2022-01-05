@@ -11,20 +11,26 @@ class Q_uber:
     P = [[[],[],[],[]]for i in range(64)]
     epsilon = 0.1
 
-    def set_P_val(self, state, action):
-        self.P[state][action].append(state)
+    def set_P_val(self, state, next_state, action):
+        self.P[state][action].append(next_state)
         self.P[state][action].append(self.graph[state][1])
-        if state == self.finish:
+        if next_state == self.finish:
             self.P[state][action].append(True)
             self.P[state][action][1] = 10
+        else:
+            self.P[state][action].append(False)
 
     def init_P(self):
         for i in range(64): #state
-            for j in range(4): #possible action
-                if j == 0:
-                    for k in self.adj[i]:
-                        if k == i + 8:
-                            self.set_P_val(i,j)
+            for j in self.adj[i]: #possible action
+                if j == i + 8:
+                    self.set_P_val(i,j,0)
+                elif j == i - 8:
+                    self.set_P_val(i,j,1)
+                elif j == i + 1:
+                    self.set_P_val(i,j,2)
+                elif j == i - 1:
+                    self.set_P_val(i,j,3)
 
     def __init__(self,adj,graph,start,finish):
 
