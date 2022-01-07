@@ -10,27 +10,28 @@ class Q_uber:
     visited_vert = []
     P = [[[],[],[],[]]for i in range(64)]
     epsilon = 0.1
+    alpha = 0.1
+    gamma = 0.6
+    Q = [[[0],[0],[0],[0]]for i in range(64)]
 
     def set_P_val(self, state, next_state, action):
-        self.P[state][action].append(next_state)
-        self.P[state][action].append(self.graph[state][1])
-        if next_state == self.finish:
-            self.P[state][action].append(True)
-            self.P[state][action][1] = 10
+        if next_state == -1 or self.graph[next_state][1] < -1:
+            self.P[state][action].append(state)
+            self.P[state][action].append(-10)
+            self.P[state][action].append(False)
         else:
+            self.P[state][action].append(next_state)
+            self.P[state][action].append(-1)
             self.P[state][action].append(False)
 
+            if next_state == self.finish:
+                self.P[state][action][1] = 10
+                self.P[state][action][2] = True
+            
     def init_P(self):
         for i in range(64): #state
-            for j in self.adj[i]: #possible action
-                if j == i + 8:
-                    self.set_P_val(i,j,0)
-                elif j == i - 8:
-                    self.set_P_val(i,j,1)
-                elif j == i + 1:
-                    self.set_P_val(i,j,2)
-                elif j == i - 1:
-                    self.set_P_val(i,j,3)
+            for j in range(len(self.adj[i])): #possible action
+                self.set_P_val(i,self.adj[i][j], j) 
 
     def __init__(self,adj,graph,start,finish):
 
@@ -39,6 +40,9 @@ class Q_uber:
         self.start = start
         self.finish = finish
         self.init_P()
+
+    def train(self):
+        pass
 
     def reset_position(self):
         return self.start

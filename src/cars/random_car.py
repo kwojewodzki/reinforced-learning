@@ -17,7 +17,12 @@ class Random_car:
     def random_move(self,curr_vert):
 
         dice_throw = self.throw_dice(len(self.adj[curr_vert])-1)
-        next_vert = self.adj[curr_vert][dice_throw]
+
+        if self.adj[curr_vert][dice_throw] != -1:
+            next_vert = self.adj[curr_vert][dice_throw]
+        else:
+            next_vert=curr_vert
+
         self.visited_vert.append(next_vert)
         return next_vert
 

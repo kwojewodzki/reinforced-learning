@@ -14,15 +14,23 @@ class Maze:
             j = i+1
             if j-size_of_wall > 0: #Check if is node below
                 self.adj[i].append(i-size_of_wall)      
+            else:
+                self.adj[i].append(-1)    
 
             if j%size_of_wall != 1:#Check if is node on left
                 self.adj[i].append(i-1)   
-
+            else:
+                self.adj[i].append(-1) 
+                   
             if j%size_of_wall != 0:#Check if is node on right
                 self.adj[i].append(i+1)
+            else:
+                self.adj[i].append(-1)    
 
             if j+size_of_wall < size_of_wall**2:#Check if is node above
                 self.adj[i].append(i+size_of_wall)
+            else:
+                self.adj[i].append(-1)    
 
     def add_obstacles(self):
         for i in range(size_of_wall**2):
