@@ -1,8 +1,4 @@
-import testing_uber as q_uber
+import random as rand
 
-
-
-
-
-
-if __name__ == "__main__":
+for i in range(50):
+    print(rand.randint(0,3))

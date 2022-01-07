@@ -21,7 +21,7 @@ class Maze:
                 self.adj[i].append(i-1)   
             else:
                 self.adj[i].append(-1) 
-                   
+
             if j%size_of_wall != 0:#Check if is node on right
                 self.adj[i].append(i+1)
             else:
@@ -58,7 +58,6 @@ class Maze:
         self.finish = finish
 
         self.make_graph()
-        print(load_maze)
         if load_maze:
            self.load_maze()
         else:
