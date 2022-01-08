@@ -26,20 +26,34 @@ class Random_car:
         self.visited_vert.append(next_vert)
         return next_vert
 
+    def save_result(self,iterations, visited):
+        try:
+            f1= open("../data/results/rand_iterations.data", "a")
+            f2= open("../data/results/rand_steps.data", "a")
+        except:
+            print("Cannot open file with maze")
+        else:
+            f1.write(str(iterations) + '\n')
+            f2.write(str(visited) + '\n')
+
+            f1.close()
+            f2.close()
+            
     def solve_maze(self):
         next_vert = 0
-        crashed = False
         iterations = 0
         curr_vert = self.start
-        
+        iterations = 0
+
         while curr_vert != self.finish:
+            iterations += 1
             self.visited_vert = []
             self.visited_vert.append(self.start)
             curr_vert = self.start
             while curr_vert != self.finish:
-                iterations += 1
                 next_vert = self.random_move(curr_vert)
                 if self.graph[next_vert][1] == -10:
                     break
                 curr_vert = next_vert
+        self.save_result(iterations,len(self.visited_vert))
                 
