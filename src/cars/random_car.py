@@ -27,15 +27,19 @@ class Random_car:
         return next_vert
 
     def solve_maze(self):
-        self.visited_vert = []
-        self.visited_vert.append(self.start)
-        curr_vert = self.start
         next_vert = 0
         crashed = False
         iterations = 0
-
+        curr_vert = self.start
+        
         while curr_vert != self.finish:
-            iterations += 1
-            next_vert = self.random_move(curr_vert)
-            curr_vert = next_vert
+            self.visited_vert = []
+            self.visited_vert.append(self.start)
+            curr_vert = self.start
+            while curr_vert != self.finish:
+                iterations += 1
+                next_vert = self.random_move(curr_vert)
+                if self.graph[next_vert][1] == -10:
+                    break
+                curr_vert = next_vert
                 

@@ -16,7 +16,8 @@ if __name__ == "__main__":
     maze = gen_maze.Maze(start,finish, load_maze)
     rand_car = rc.Random_car(maze.adj,maze.graph,start,finish)
     q_uber = qu.Q_uber(maze.adj,maze.graph,start,finish)
-    #rand_car.solve_maze()
-    #print("Car went through maze in", len(rand_car.visited_vert),"moves")
+    rand_car.solve_maze()
+    print("Car went through maze in", len(rand_car.visited_vert),"moves")
+    
     q_uber.train()
     q_uber.solve_maze()

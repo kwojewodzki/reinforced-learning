@@ -53,7 +53,7 @@ class Q_uber:
         return next_action,reward,done
 
     def train(self):
-        for i in range(1,1000):
+        for i in range(1,10000):
             state = self.reset_position()
             done = False
             while not done:
@@ -69,6 +69,8 @@ class Q_uber:
 
                 new_val = ((1 - self.alpha) * old_val) + (self.alpha * (reward + (self.gamma * next_max)))
                 self.Q[state][action] = new_val
+                if reward == -10:
+                    break
                 state = next_state
             
         print("Finished training")
@@ -80,13 +82,11 @@ class Q_uber:
         state = self.reset_position()
         done = False
         path = []
-        while not done:
-            path.append(state)
-            action = np.argmax(self.Q[state])  
+        for i in range(10):
+            while not done:
+                path.append(state)
+                action = np.argmax(self.Q[state])  
 
-            next_state,reward,done = self.move(state,action)
-            state = next_state
-
-        print("walked through maze")
-        print(path)
-            
+                next_state,reward,done = self.move(state,action)
+                state = next_state
+            print(path)
