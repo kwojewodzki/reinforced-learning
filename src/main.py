@@ -17,8 +17,6 @@ if __name__ == "__main__":
     rand_car = rc.Random_car(maze.adj,maze.graph,start,finish)
     q_uber = qu.Q_uber(maze.adj,maze.graph,start,finish)
 
-    #for i in range(100):
-    #    rand_car.solve_maze()
     for i in range(100):
         q_uber.train()
         q_uber.solve_maze()

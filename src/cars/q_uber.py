@@ -11,8 +11,8 @@ class Q_uber:
     visited_vert = []
     P = [[[],[],[],[]]for i in range(64)]
     epsilon = 0.1
-    alpha = 0.1
-    gamma = 0.6
+    alpha = 0.2
+    gamma = 0.95
     Q = [[0,0,0,0]for i in range(64)]
 
     def set_P_val(self, state, next_state, action):

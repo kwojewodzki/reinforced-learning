@@ -12,7 +12,7 @@ Elon Piżmo konstruuje autonomiczne samochody do swojego najnowszego biznesu. Dy
 
 #### Omówienie
 
-![labirynt](D:\programming\Python\reinforced-learning\graphics\labirynt.png)
+![](https://i.imgur.com/58CZBWP.png)
 
 <span style="color:red">Czerwony</span> - Zajęte pole, wjechanie na nie powoduje kolizję
 
@@ -36,7 +36,8 @@ Algorytm jest uruchamiany przez komendę `python main.py "start" "finish" "load_
 
 #### Opis problemu
 
-![labirynt_do_rozwiąznia](D:\programming\Python\reinforced-learning\graphics\labirynt_do_rozwiąznia.png)
+![](https://i.imgur.com/riXbY7W.png)
+
 
 Celem programu jest pokonanie powyższego labiryntu w jak najkrótszym czasie. W tym celu zostały użyte dwa algorytmy. Jeden porusza się losowo dopóki nie znajdzie ścieżki między punktami, gdy wjedzie na zabronione pole lub wyjedzie poza zakres algorytm resetuje się i próbuje znowu od punktu początkowego. Drugi algorytm wykorzystuje uczenie ze wzmocnieniem. Na początku przechodzi labirynt i zapamiętuje optymalną ścieżkę. Następnie przechodzi labirynt i zapisuje ścieżkę którą się poruszał.
 
@@ -56,24 +57,41 @@ Celem programu jest pokonanie powyższego labiryntu w jak najkrótszym czasie. W
 
 ##### Losowe poruszanie
 
-Średnia ilość prób potrzebna do znalezienia ścieżki: 1076,14
+Średnia ilość prób potrzebna do znalezienia ścieżki: 
 
-Średnia ilość odwiedzonych pól po drodze do celu: 16,5
+Średnia ilość odwiedzonych pól po drodze do celu: 
 
-@TODO dodać wnioski
+
+
+|                 | Średnia | Minimalna | Maksymalna |
+| :-------------- | :------ | --------- | :--------- |
+| Próby           | 1076,14 | 5         | 5642       |
+| Odwiedzone pola | 16,5    | 9         | 45         |
+
+Algorytm próbuje porusza się w losowym kierunku do momentu aż nie trafi na "ścianę" lub nie dojdzie do punktu końcowego. Dane są z godnie z oczekiwaniami bardzo losowe. Zdarza się, że wyniki są równie dobre jak w przypadku uczenia ze wzmocnieniem, jednak jest to rzadkie zjawisko i nie jest to metoda dająca dobre wyniki. 
+
 
 ##### Q learning
 
 ###### Nauka
 
-Średnia ilość kroków : 13,0961413 
+Alpha - współczynnik uczenia
 
-Średnia ilość kar: 282,58
+Gamma - wartość oceniająca jak istotne dla algorytmu są kary i nagrody
 
-@TODO dopisać wszystko
+Nauka odbywa się podczas 1000 epizodów. Średnia jest określana na podstawie 100 uruchomień algorytmu.
+
+| Alpha | Gamma | Średnia ilość kar | Minimalna ilość kar | Maksymalna ilość kar | Średnia ilość odwiedzonych pól |
+| :---- | ----- | :---------------- | ------------------- | :------------------- | ------------------------------ |
+| 0.1   | 0.6   | 282,58            | 247                 | 323                  | 13,096                         |
+| 0.3   | 0.6   | 221,04            | 185                 | 268                  | 11,60787209                    |
+| 0.3   | 0.3   | 234,32            | 205                 | 264                  | 12,06133                       |
+| 0.2   | 0.2   | 271,22            | 232                 | 319                  | 13,3289                        |
+| 0.2   | 0.95  | 238,14            | 203                 | 279                  | 11,65586                       |
+
+Zmniejszanie zarówno parametru alpha i gamma powoduje zwiększenie ilości kar oraz średnią ilość odwiedzonych pól. Gdy gamma jest dużo wyższa algorytm znajduje optymalną ścieżkę szybciej co wynika z niższej średniej ilości kroków.
 
 ###### Rozwiązanie labiryntu
 
-Średnia liczba kroków: 9
+Po procesie nauki nie występują żadne odchylenia od normy. Każde ze 100 uruchomień znajduje drogę do celu w 9 krokach (licząc pole startowe) i nie wjeżdża w ściany. Dla wszystkich sprawdzonych parametrów wyniki są takie same. 1000 epizodów treningowych jest wystarczające do dobrego nauczenia algorytmu.
 
-Średnia liczba kar: 0
