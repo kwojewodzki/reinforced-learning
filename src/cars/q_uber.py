@@ -11,8 +11,8 @@ class Q_uber:
     visited_vert = []
     P = [[[],[],[],[]]for i in range(64)]
     epsilon = 0.1
-    alpha = 0.1
-    gamma = 0.6
+    alpha = 0.2
+    gamma = 0.95
     Q = [[0,0,0,0]for i in range(64)]
 
     def set_P_val(self, state, next_state, action):
@@ -52,10 +52,42 @@ class Q_uber:
         done = self.P[state][action][2]
         return next_action,reward,done
 
+    def save_result(self,penalties, steps,type):
+        if type == "train":
+            try:
+                f1= open("../data/results/q_train_penalties.data", "a")
+                f2= open("../data/results/q_train_steps.data", "a")
+            except:
+                print("Cannot open file with maze")
+            else:
+                f1.write(str(penalties) + '\n')
+                f2.write(str(steps) + '\n')
+
+                f1.close()
+                f2.close()
+        elif type == "solve":
+            try:
+                f1= open("../data/results/q_solve_penalties.data", "a")
+                f2= open("../data/results/q_solve_steps.data", "a")
+            except:
+                print("Cannot open file with maze")
+            else:
+                f1.write(str(penalties) + '\n')
+                f2.write(str(steps) + '\n')
+
+                f1.close()
+                f2.close()
+        else:
+            print("Something went wrong")
+
     def train(self):
-        for i in range(1,1000):
+        self.Q = [[0,0,0,0]for i in range(64)]
+        penalties = 0
+        steps_array = []
+        for i in range(1,1001):
             state = self.reset_position()
             done = False
+            steps = 0
             while not done:
                 if rand.uniform(0,1) < 0.1:
                     action = self.throw_dice()
@@ -69,24 +101,36 @@ class Q_uber:
 
                 new_val = ((1 - self.alpha) * old_val) + (self.alpha * (reward + (self.gamma * next_max)))
                 self.Q[state][action] = new_val
+                if reward == -10:
+                    penalties += 1
+                    steps += 10
+                    break
                 state = next_state
+                steps += 1
+            steps_array.append(steps)
+        avg_steps = np.average(steps_array)
+        self.save_result(penalties,avg_steps,"train")
             
-        print("Finished training")
 
     def reset_position(self):
         return self.start
 
     def solve_maze(self):
+        
+        penalties = 0
+        steps = 0 
         state = self.reset_position()
         done = False
         path = []
         while not done:
+            steps += 1
             path.append(state)
             action = np.argmax(self.Q[state])  
 
             next_state,reward,done = self.move(state,action)
             state = next_state
-
-        print("walked through maze")
-        print(path)
-            
+            if reward == -10:
+                penalties += 1
+                break
+        self.save_result(penalties,steps,"solve")
+        #print(path)
